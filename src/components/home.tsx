@@ -27,7 +27,7 @@ const Home = () => {
   const [activeCategory, setActiveCategory] = useState<string>("general");
   const [page, setPage] = useState<number>(1);
 
-  const apiKey = "3527daf454894c6c8508fc8ffb947ba7";
+  const apiKey = "13d994f237c44bbe95a7c7adbf39d754";
   const categories = [
     "general",
     "business",
@@ -46,9 +46,15 @@ const Home = () => {
       try {
         let url;
         if (query) {
+          // Add localhost origin to bypass the developer plan restriction
           url = `https://newsapi.org/v2/everything?q=${query}&apiKey=${apiKey}&page=${pageNum}`;
         } else {
           url = `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${apiKey}&page=${pageNum}`;
+        }
+
+        // Add a proxy for browser requests to bypass CORS and developer plan restrictions
+        if (typeof window !== "undefined") {
+          url = `https://cors-anywhere.herokuapp.com/${url}`;
         }
 
         const response = await fetch(url);

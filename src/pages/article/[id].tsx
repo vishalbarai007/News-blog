@@ -32,7 +32,7 @@ export default function ArticleDetail() {
         // In a real app, you would fetch the specific article by ID
         // For this demo, we're simulating fetching a single article
         const response = await fetch(
-          `https://newsapi.org/v2/top-headlines?country=us&apiKey=3527daf454894c6c8508fc8ffb947ba7`,
+          `https://newsapi.org/v2/top-headlines?country=us&apiKey=13d994f237c44bbe95a7c7adbf39d754`,
         );
 
         if (!response.ok) {
@@ -40,9 +40,16 @@ export default function ArticleDetail() {
         }
 
         const data = await response.json();
-        // Find the article with the matching ID (in a real app, you'd fetch by ID directly)
-        // For demo purposes, we're just getting the first article
-        setArticle(data.articles[0]);
+        // Find the article with the matching ID
+        // For demo purposes, we're using the ID as an index
+        const articleIndex = parseInt(id || "0");
+        if (data.articles && data.articles.length > articleIndex) {
+          setArticle(data.articles[articleIndex]);
+        } else if (data.articles && data.articles.length > 0) {
+          setArticle(data.articles[0]);
+        } else {
+          throw new Error("Article not found");
+        }
       } catch (err) {
         setError("Failed to load article. Please try again later.");
         console.error(err);
