@@ -53,9 +53,9 @@ const Home = () => {
         }
 
         // Add a proxy for browser requests to bypass CORS and developer plan restrictions
-        if (typeof window !== "undefined") {
-          url = `https://cors-anywhere.herokuapp.com/${url}`;
-        }
+        // if (typeof window !== "undefined") {
+        //   url = `https://cors-anywhere.herokuapp.com/${url}`;
+        // }
 
         const response = await fetch(url);
         const data = await response.json();
